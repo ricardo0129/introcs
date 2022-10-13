@@ -50,7 +50,10 @@ def playSample(s):
         temp = []
         for sample in _myBuffer:
             temp.append(numpy.int16(sample * float(0x7fff)))
+        if len(temp)%2==1:
+            temp.append(temp[-1])
         samples = numpy.array(temp, numpy.int16)
+        samples = samples.reshape(samples.shape[0]//2,2)
         sound = pygame.sndarray.make_sound(samples)
         wait()
         _channel.queue(sound)
